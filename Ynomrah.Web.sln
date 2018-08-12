@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ynomrah.Web", "Ynomrah.Web\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{F52A71C1-8EA5-4607-9F95-AA04EC2453A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "hiJump.Infrastructure", "hiJump.Infrastructure\hiJump.Infrastructure.csproj", "{C5D5318B-372A-4DCA-A1FE-C79065B2FB51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hiJump.Infrastructure", "hiJump.Infrastructure\hiJump.Infrastructure.csproj", "{C5D5318B-372A-4DCA-A1FE-C79065B2FB51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StructureMap", "StructureMap\StructureMap.csproj", "{678FFD88-848D-46A5-8341-F094B7E89F6C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{C5D5318B-372A-4DCA-A1FE-C79065B2FB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5D5318B-372A-4DCA-A1FE-C79065B2FB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5D5318B-372A-4DCA-A1FE-C79065B2FB51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{678FFD88-848D-46A5-8341-F094B7E89F6C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{678FFD88-848D-46A5-8341-F094B7E89F6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{678FFD88-848D-46A5-8341-F094B7E89F6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{678FFD88-848D-46A5-8341-F094B7E89F6C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
