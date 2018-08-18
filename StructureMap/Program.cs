@@ -10,6 +10,7 @@ namespace StructureMap
     {
         static void Main(string[] args)
         {
+            //Test StructureMap
             StructureMap.youtube_video_nr1.Test1.Run();
             Console.Read();
         }
