@@ -1,0 +1,2 @@
+﻿http://www.ynomrah.com/Home/GetPerson
+http://www.ynomrah.com/Home/EchoPerson?firstName=Jonas&lastName=Leander&age=48
