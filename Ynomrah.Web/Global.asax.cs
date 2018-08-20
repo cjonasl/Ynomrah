@@ -131,7 +131,9 @@ namespace Ynomrah.Web
 
             FileStream fileStream = new FileStream("C:\\tmp\\RequestResult.txt", FileMode.Append, FileAccess.Write);
             StreamWriter streamWriter = new StreamWriter(fileStream, Encoding.UTF8);
+            streamWriter.WriteLine("URL: " + this.Request.Url.AbsolutePath + "  Result:\r\n");
             streamWriter.WriteLine(result);
+            streamWriter.WriteLine("\r\n\r\n----------------------------------\r\n\r\n");
             streamWriter.Flush();
             fileStream.Flush();
             streamWriter.Close();

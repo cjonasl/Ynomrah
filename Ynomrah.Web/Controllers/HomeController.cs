@@ -11,12 +11,6 @@ namespace Ynomrah.Web.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public JsonResult GetPerson()
         {
             Person person = new Person()
