@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Milano</title>
+</head>
+<body>
+  <div>
+    <h2>Html.Action (PartialViewResult)</h2>
+    @Html.Action("Paris", "Jonas", new { firstName = "Jonas", lastName = "Leander", age = 48 })
+  </div>
+  <div>
+    <h2>Html.RenderAction (PartialViewResult)</h2>
+    @{Html.RenderAction("Paris", "Jonas", new { firstName = "Ivan", lastName = "Lendl", age = 58 });}
+  </div>
+  <div>
+    <h2>Html.Action (ActionResult)</h2>
+    @Html.Action("Berlin", "Jonas", new { firstName = "Martina", lastName = "Natravilova", age = 62 })
+  </div>
+  <div>
+    <h2>Html.RenderAction (ActionResult)</h2>
+    @{Html.RenderAction("Berlin", "Jonas", new { firstName = "Jimmy", lastName = "Connors", age = 66 });}
+  </div>
+  <div>
+    <h2>Html.Partial</h2>
+    @Html.Partial("Paris", new Ynomrah.Web.Models.Person("Malin", "Nilsson", 15))
+  </div>
+  <div>
+    <h2>Html.RenderPartial</h2>
+    @{Html.RenderPartial("Paris", new Ynomrah.Web.Models.Person("Bertil", "Eriksson", 45));}
+  </div>
+</body>
+</html>

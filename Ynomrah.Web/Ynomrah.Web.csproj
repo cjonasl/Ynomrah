@@ -92,6 +92,7 @@
     <None Include="Browse.txt" />
     <Content Include="Global.asax" />
     <None Include="Links.txt" />
+    <None Include="Information.txt" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +110,9 @@
     <None Include="packages.config" />
     <Content Include="Views\Home\EchoPerson.cshtml" />
     <Content Include="Views\Jonas\ListOfCountries.cshtml" />
+    <Content Include="Views\Jonas\Paris.cshtml" />
+    <Content Include="Views\Jonas\Berlin.cshtml" />
+    <Content Include="Views\Jonas\Milano.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
