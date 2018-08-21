@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
+//tmp solution
 namespace Ynomrah.Web
 {
     public class MvcApplication : System.Web.HttpApplication
