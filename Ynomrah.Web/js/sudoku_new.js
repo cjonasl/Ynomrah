@@ -75,7 +75,7 @@ window.Sudoku.Random = function() {
 window.Sudoku.IntegerDivision = function (a, b) {
     var n = 1;
 
-    while ((n * b) < a) {
+    while ((n * b) <= a) {
         n++;
     }
 
@@ -156,20 +156,15 @@ window.Sudoku.SudokuBoard = function() {
         return returnValue;
     }
 
-    this.CanSetItemValueInCell = function(rowIndex, columnIndex, itemValue) {
-        var squareIndex = (3 * Sudoku.IntegerDivision(rowIndex, 3)) + Sudoku.IntegerDivision(columnIndex, 3);
-        return !this.RowHasItemValueInAnyCell(rowIndex, itemValue) && !this.ColumnHasItemValueInAnyCell(columnIndex, itemValue) && !this.SquareHasItemValueInAnyCell(squareIndex, itemValue);
-    }
-
     this.UpdateStructure = function(rowIndex, columnIndex, squareIndex, itemValue) {
-        var i, j, rowIdx, colIdx, sqIdx, bort;
+        var i, j, rowIdx, colIdx, sqIdx;
 
         for (i = 0; i < this._cells[rowIndex][columnIndex].possibleItemValuesToSet.Count(); i++) {
 
             this._numberOfItemsPossibleToSetRow[rowIndex][this._cells[rowIndex][columnIndex].possibleItemValuesToSet.Index(i) - 1]--;
             this._numberOfItemsPossibleToSetColumn[columnIndex][this._cells[rowIndex][columnIndex].possibleItemValuesToSet.Index(i) - 1]--;
             this._numberOfItemsPossibleToSetSquare[squareIndex][this._cells[rowIndex][columnIndex].possibleItemValuesToSet.Index(i) - 1]--;
-            this._totalNumberOfItemsPossibleToSet -= 3;
+            this._totalNumberOfItemsPossibleToSet--;
         }
 
         this._cells[rowIndex][columnIndex].possibleItemValuesToSet.Clear();
@@ -179,11 +174,11 @@ window.Sudoku.SudokuBoard = function() {
                 for (j = 0; j < this._cells[rowIndex][i].possibleItemValuesToSet.Count(); j++) {
                     if (this._cells[rowIndex][i].possibleItemValuesToSet.IndexOf(itemValue) >= 0) {
                         this._cells[rowIndex][i].possibleItemValuesToSet.Remove(itemValue);
+                        this._totalNumberOfItemsPossibleToSet--;
                         sqIdx = (3 * Sudoku.IntegerDivision(rowIndex, 3)) + Sudoku.IntegerDivision(i, 3);
                         this._numberOfItemsPossibleToSetRow[rowIndex][itemValue - 1]--;
                         this._numberOfItemsPossibleToSetColumn[i][itemValue - 1]--;
                         this._numberOfItemsPossibleToSetSquare[sqIdx][itemValue - 1]--;
-                        this._totalNumberOfItemsPossibleToSet -= 3;
                     }
                 }
             }
@@ -194,11 +189,11 @@ window.Sudoku.SudokuBoard = function() {
                 for (j = 0; j < this._cells[i][columnIndex].possibleItemValuesToSet.Count(); j++) {
                     if (this._cells[i][columnIndex].possibleItemValuesToSet.IndexOf(itemValue) >= 0) {
                         this._cells[i][columnIndex].possibleItemValuesToSet.Remove(itemValue);
+                        this._totalNumberOfItemsPossibleToSet--;
                         sqIdx = (3 * Sudoku.IntegerDivision(i, 3)) + Sudoku.IntegerDivision(columnIndex, 3);
                         this._numberOfItemsPossibleToSetRow[i][itemValue - 1]--;
                         this._numberOfItemsPossibleToSetColumn[columnIndex][itemValue - 1]--;
                         this._numberOfItemsPossibleToSetSquare[sqIdx][itemValue - 1]--;
-                        this._totalNumberOfItemsPossibleToSet -= 3;
                     }
                 }
             }
@@ -212,26 +207,14 @@ window.Sudoku.SudokuBoard = function() {
                 for (j = 0; j < this._cells[rowIdx][colIdx].possibleItemValuesToSet.Count(); j++) {
                     if (this._cells[rowIdx][colIdx].possibleItemValuesToSet.IndexOf(itemValue) >= 0) {
                         this._cells[rowIdx][colIdx].possibleItemValuesToSet.Remove(itemValue);
-                        sqIdx = (3 * Sudoku.IntegerDivision(rowIdx, 3)) + Sudoku.IntegerDivision(colIdx, 3);
+                        this._totalNumberOfItemsPossibleToSet--;
                         this._numberOfItemsPossibleToSetRow[rowIdx][itemValue - 1]--;
                         this._numberOfItemsPossibleToSetColumn[colIdx][itemValue - 1]--;
-                        this._numberOfItemsPossibleToSetSquare[sqIdx][itemValue - 1]--;
-                        this._totalNumberOfItemsPossibleToSet -= 3;
+                        this._numberOfItemsPossibleToSetSquare[squareIndex][itemValue - 1]--;
                     }
                 }
             }
         }
-
-        //------------- BORT ---------------------
-        bort = 0;
-        for (i = 0; i < 9; i++) {
-            for (j = 0; j < 9; j++) {
-                bort += this._cells[i][j].possibleItemValuesToSet.Count()
-            }
-        }
-        bort = 3 * bort;
-        alert("bort=" + bort + ", this._totalNumberOfItemsPossibleToSet=" + this._totalNumberOfItemsPossibleToSet);
-        //---------------------------------------
     }
 
     this.Init = function() {
@@ -258,10 +241,10 @@ window.Sudoku.SudokuBoard = function() {
             }
         }
 
-        this._totalNumberOfItemsPossibleToSet = (81 * 9 * 3);
+        this._totalNumberOfItemsPossibleToSet = (81 * 9);
     }
 
-    this.SetCell = function(rowIndex, columnIndex, itemValue, originalData) {
+    this.SetCell = function (rowIndex, columnIndex, itemValue, originalData) {
         var squareIndex = (3 * Sudoku.IntegerDivision(rowIndex, 3)) + Sudoku.IntegerDivision(columnIndex, 3);
         var row = rowIndex + 1;
         var column = columnIndex + 1;
@@ -324,7 +307,7 @@ window.Sudoku.SudokuBoard = function() {
 
         for (i = 0; i < originalData.Count(); i++)
         {
-            threeTupleOfIntegers = originalData[i];
+            threeTupleOfIntegers = originalData.Index(i);
             position = new Sudoku.TwoTupleOfIntegers(threeTupleOfIntegers.x, threeTupleOfIntegers.y);
             itemValue = threeTupleOfIntegers.z;
             data.Add(new Sudoku.Cell(position, itemValue, true));
@@ -384,7 +367,7 @@ window.Sudoku.SudokuBoard = function() {
     }
 
     this.SimulateOneItem = function () {
-        var i, rowIndex, columnIndex, minNumberPossibleToSetItems, randomNumber, n, index, itemValue, bortBf, bortAf;
+        var i, rowIndex, columnIndex, minNumberPossibleToSetItems, randomNumber, n, index, itemValue;
         var numberPossibleToSetItems = [];
 
         for (i = 0; i < 8; i++) {
@@ -422,11 +405,8 @@ window.Sudoku.SudokuBoard = function() {
                 index = this._random.Next(minNumberPossibleToSetItems);
                 itemValue = this._cells[rowIndex][columnIndex].possibleItemValuesToSet.Index(index);
                 this.SetCell(rowIndex, columnIndex, itemValue, false);
-                this._simulationHasBeenDone = true;
-                bortBf = this._cellsRemainToSet.Count();              
+                this._simulationHasBeenDone = true;            
                 this._cellsRemainToSet.RemoveAt(i);
-                bortAf = this._cellsRemainToSet.Count();
-                alert("Simulering. antal innan = " + bortBf + ", antal efter =" + bortAf + ", totalNumberOfItemsPossibleToSet = " + this._totalNumberOfItemsPossibleToSet); //BORT
             }
 
             i++;
@@ -449,7 +429,7 @@ window.Sudoku.SudokuBoard = function() {
     }
 
     this.Process = function(originalData, maxNumberOfTries) {
-        var data, bortBf, bortAf, sattnor;
+        var data;
         var numberOfTries = 0, maxNumberOfItemsSetInATry = 0;
         var atLeastOneItemSet;
         var errorMessage;
@@ -484,16 +464,12 @@ window.Sudoku.SudokuBoard = function() {
             atLeastOneItemSet = true;
 
             while ((this._cellsRemainToSet.Count() > 0) && atLeastOneItemSet) {
-                bortBf = this._cellsRemainToSet.Count();
                 atLeastOneItemSet = this.LoopThroughListWithCellsThatRemainToSet();
-                sattnor = atLeastOneItemSet;
-                if ((!atLeastOneItemSet) && (this._totalNumberOfItemsPossibleToSet > 0)) {
+
+                if (!atLeastOneItemSet && (this._totalNumberOfItemsPossibleToSet > 0)) {
                     this.SimulateOneItem();
                     atLeastOneItemSet = true;
                 }
-
-                bortAf = this._cellsRemainToSet.Count();
-                alert("antal innan = " + bortBf + ", antal efter =" + bortAf + ", satt i normala = " + sattnor + ", totalNumberOfItemsPossibleToSet = " + this._totalNumberOfItemsPossibleToSet); //BORT
             }
               
             if ((81 - originalData.Count() - this._cellsRemainToSet.Count()) > maxNumberOfItemsSetInATry) {
@@ -585,8 +561,8 @@ window.Sudoku.solve = function () {
     }
 
     if (errorNotFound) {
-        sudokuBoard = new window.Sudoku.SudokuBoard()
-        result = sudokuBoard.Process(Sudoku.originalData, 25);
+        sudokuBoard = new window.Sudoku.SudokuBoard();
+        result = sudokuBoard.Process(window.Sudoku.originalData, 25);
 
         if (result.errorMessage != null) {
             alert(result.errorMessage);
@@ -614,9 +590,9 @@ window.Sudoku.solve = function () {
             if (result.partiallySolved) {
                 alert("Unable to completely solve this sudoku!");
             }
-            else {
+            /*else {
                 alert("Sudoku solved!");
-            }
+            }*/
 
             $("#solveButton").prop("disabled", true);
             $("#solveButton").addClass("greyFontColor");
