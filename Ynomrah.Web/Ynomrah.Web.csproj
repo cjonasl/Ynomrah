@@ -90,15 +90,23 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Browse.txt" />
+    <Content Include="css\bootstrap\bootstrap.min.version3.3.7.css" />
+    <Content Include="gif\background.gif" />
     <Content Include="Global.asax" />
     <None Include="Links.txt" />
     <None Include="Information.txt" />
+    <Content Include="js\bootstrap\bootstrap.min.version3.3.7.js" />
+    <Content Include="js\jQuery\jquery.min.version1.12.4.js" />
+    <Content Include="js\sudoku_new.js" />
+    <Content Include="js\sudoku_old.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JonasController.cs" />
+    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\SudokuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -113,6 +121,9 @@
     <Content Include="Views\Jonas\Paris.cshtml" />
     <Content Include="Views\Jonas\Berlin.cshtml" />
     <Content Include="Views\Jonas\Milano.cshtml" />
+    <Content Include="Views\Main\Index.cshtml" />
+    <Content Include="Views\Sudoku\Old.cshtml" />
+    <Content Include="Views\Sudoku\New.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

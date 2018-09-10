@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <title>New sydoku solver</title>
+
+  <link href="~/css/bootstrap/bootstrap.min.version3.3.7.css" rel="stylesheet" />
+
+  <style>
+
+    .cursorPointer {
+      cursor: pointer;
+    }
+
+    body {
+      background-image: url("http://www.ynomrah.com//gif/background.gif");
+    }
+
+    .sudokuSquares {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      font-family: 'Courier New';
+      font-size: x-large;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .startInteger {
+      color: mediumvioletred;
+    }
+
+    .hideElement {
+      display: none;
+    }
+
+    .greyFontColor {
+      color: grey;
+    }
+  </style>
+</head>
+<body>
+  <div id="divSudokuSolver" style="margin-top: 80px; font-family: 'Times New Roman'">
+    <h1 style="position: absolute; left: 40px; top: 36px; font-family: 'Times New Roman'; color: royalblue;">Jonas's sudoku solver</h1>
+    <p style="position: absolute; left: 40px; top: 100px; font-family: 'Times New Roman'; font-weight: bold;">Enter start integers (between 1 and 9) in the sudoku puzzle below and press "solve".</p>
+    <button id="solveButton" style="position: absolute; left: 40px; top: 132px; font-family: Arial; font-weight: bold;">Solve</button>
+    <button id="newSudokuButton" style="position: absolute; left: 100px; top: 132px; font-family: Arial; font-weight: bold;" class="greyFontColor">New</button>
+  </div>
+
+  <script src="~/js/jQuery/jquery.min.version1.12.4.js"></script>
+  <script src="~/js/bootstrap/bootstrap.min.version3.3.7.js"></script>
+  <script src="~/js/sudoku_new.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#solveButton").on("click", window.Sudoku.solve);
+      $("#newSudokuButton").on("click", window.Sudoku.newSudoku);
+      $("#newSudokuButton").prop("disabled", true);
+      window.Sudoku.makeSudokuSquares();
+    });
+  </script>
+</body>
+</html>
