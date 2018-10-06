@@ -42,6 +42,9 @@ namespace ShowFiles
             int i, j, m, n;
             _files = Directory.GetFiles(_directory);
 
+            if (_files.Length == 0)
+                return;
+
             for(i = 0; i < (_files.Length - 1); i++)
             {
                 for(j = (i + 1); j < _files.Length; j++)
