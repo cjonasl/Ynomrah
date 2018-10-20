@@ -25,6 +25,12 @@ namespace Ynomrah.Web.Controllers
         }
     }
 
+    public class Resource
+    {
+        public string Title { get; set; }
+        public string Text { get; set; }
+    }
+
 
     public class Test1Controller : Controller
     {
@@ -32,6 +38,14 @@ namespace Ynomrah.Web.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        [ValidateInput(false)]
+        public JsonResult TestAjax(Resource resource)
+        {
+            string str = "Server received title = " + resource.Title + " and text = " + resource.Text;
+
+            return Json(str, JsonRequestBehavior.AllowGet);
         }
     }
 }

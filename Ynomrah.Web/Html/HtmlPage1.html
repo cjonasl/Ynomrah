@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title></title>
+  <script src="http://www.ynomrah.com/js/jQuery/jquery.min.version3.3.1.js"></script>
+</head>
+<body>
+  <label for="title">Title</label>
+  <input id="title" type="text" /><br /><br />
+  <label for="resourceText">Text</label>
+  <textarea id="resourceText"></textarea><br /><br />
+  <button id="sendBtn" onclick="send()">Send</button>
+
+  <script>
+    function send() {
+      var title, text, resource;
+      title = $("#title").val();
+      text = $("#resourceText").val();
+
+      resource = {
+        title: title,
+        text: text
+      }
+
+      $.ajax({
+        url: "http://www.ynomrah.com/Test1/TestAjax",
+        data: resource,
+        dataType: "json",
+        error: function (data) { alert("An error happened! Error message: " + data.responseText); console.log(data); },
+        method: "post",
+        success: function (data) { alert("Data back from server is: " + data); }
+      }
+      );
+    }
+  </script>
+</body>
+</html>

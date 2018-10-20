@@ -1,2 +1,3 @@
 ﻿For Html.Action , Html.RenderAction, Html.Partial and Html.RenderPartial se view Jonas\Milano.cshtml
 Decide version of jQuery: Load page, open console window (F12) and execute "console.log(window.jQuery.fn.jquery)"
+Ajax exempel: Se http://www.ynomrah.com/Html/HtmlPage1.html och Test1Controller/TestAjax

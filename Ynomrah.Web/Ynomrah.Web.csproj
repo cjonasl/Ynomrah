@@ -95,8 +95,10 @@
     <Content Include="Global.asax" />
     <None Include="Links.txt" />
     <None Include="Information.txt" />
+    <Content Include="Html\HtmlPage1.html" />
     <Content Include="js\bootstrap\bootstrap.min.version3.3.7.js" />
     <Content Include="js\jQuery\jquery.min.version1.12.4.js" />
+    <Content Include="js\jQuery\jquery.min.version3.3.1.js" />
     <Content Include="js\sudoku_new.js" />
     <Content Include="js\sudoku_old.js" />
     <Content Include="Views\Test1\Index.aspx" />
