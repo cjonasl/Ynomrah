@@ -14,7 +14,7 @@ namespace ShowFiles
     public partial class Form1 : Form
     {
         private string _directory;
-        private string[] _files;
+        private ArrayList _listWithFiles;
         private readonly int MAX_NUMBER_OF_FILES = 50;
 
         public Form1()
@@ -23,6 +23,8 @@ namespace ShowFiles
             this.buttonRefresh.Visible = false;
             this.listBox1.Visible = false;
             this.textBox1.Visible = false;
+            _listWithFiles = new ArrayList();
+            this.Start();
         }
 
         private bool IsLower(string file1, string file2)
@@ -40,50 +42,69 @@ namespace ShowFiles
         {
             string tmp;
             int i, j, m, n;
-            _files = Directory.GetFiles(_directory);
+            string[] files = Directory.GetFiles(_directory);
+            int numberOfNewFiles = 0, numberOfSamefiles = 0, numberOfDeletedFiles = 0;
 
-            if (_files.Length == 0)
-                return;
+            this.listBox1.Items.Clear();
 
-            for(i = 0; i < (_files.Length - 1); i++)
+            if (files.Length == 0)
             {
-                for(j = (i + 1); j < _files.Length; j++)
+                MessageBox.Show(string.Format("There are no files to show. New files = 0. Deleted files = {0}.", _listWithFiles.Count.ToString()), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+                
+
+            for(i = 0; i < (files.Length - 1); i++)
+            {
+                for(j = (i + 1); j < files.Length; j++)
                 {
-                    if (IsLower(_files[i], _files[j]))
+                    if (IsLower(files[i], files[j]))
                     {
-                        tmp = _files[j];
-                        _files[j] = _files[i];
-                        _files[i] = tmp;
+                        tmp = files[j];
+                        files[j] = files[i];
+                        files[i] = tmp;
                     }
                 }
             }
-
-            this.listBox1.Items.Clear();
-            m = (_files.Length > MAX_NUMBER_OF_FILES) ? MAX_NUMBER_OF_FILES : _files.Length;
+        
+            m = (files.Length > MAX_NUMBER_OF_FILES) ? MAX_NUMBER_OF_FILES : files.Length;
             n = m;
 
             for (i = 0; i < m; i++)
             {
+                if (_listWithFiles.IndexOf(files[i]) == -1)
+                    numberOfNewFiles++;
+                else
+                    numberOfSamefiles++;
+
                 this.listBox1.Items.Add(n.ToString());
                 n--;
             }
 
-            for (i = MAX_NUMBER_OF_FILES; i < _files.Length; i++)
+            for (i = MAX_NUMBER_OF_FILES; i < files.Length; i++)
             {
-                File.Delete(_files[i]);
+                if (_listWithFiles.IndexOf(files[i]) >= -1)
+                    numberOfDeletedFiles++;
+
+                File.Delete(files[i]);
             }
 
+            _listWithFiles = new ArrayList(files);
+
             this.listBox1.SelectedIndex = 0;
+
+            MessageBox.Show(string.Format("List refreshed\r\nNew: {0}\r\nSame: {1}\r\nDeleted: {2}", numberOfNewFiles.ToString(), numberOfSamefiles.ToString(), numberOfDeletedFiles.ToString()), "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void buttonRun_Click(object sender, EventArgs e)
+        private void Start()
         {
             string dir, fileNameFullPathConfigFile = Directory.GetCurrentDirectory() + "\\Config.txt";
             LocationSizeOfControlls locationSizeOfControlls;
 
             if (!File.Exists(fileNameFullPathConfigFile))
             {
-                MessageBox.Show("The following file does not exist: " + fileNameFullPathConfigFile, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.textBoxError.Text = "The following file does not exist: " + fileNameFullPathConfigFile;
+                this.textBoxError.Select(0, 0);
             }
             else
             {
@@ -93,20 +114,23 @@ namespace ShowFiles
                 }
                 catch(Exception ex)
                 {
-                    MessageBox.Show("An error occured when method ReadConfig was called! e.Message = " + ex.Message , "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.textBoxError.Text = "An error occured when method ReadConfig was called! e.Message = " + ex.Message;
+                    this.textBoxError.Select(0, 0);
                     return;
                 }
 
 
                 if (!Directory.Exists(dir))
                 {
-                    MessageBox.Show("The following directory does not exist: " + dir, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.textBoxError.Text = "The following directory does not exist: " + dir;
+                    this.textBoxError.Select(0, 0);
                     return;
                 }
 
                 _directory = dir;
 
-                this.buttonRun.Visible = false;
+
+                this.textBoxError.Visible = false;
                 this.buttonRefresh.Visible = true;
                 this.listBox1.Visible = true;
                 this.textBox1.Visible = true;
@@ -134,9 +158,10 @@ namespace ShowFiles
 
         private void ReadConfig(string fileNameFullPath, out string dir, out LocationSizeOfControlls locationSizeOfControlls)
         {
+            //In v[0] is folder full name to config-file for LogRequestResponse
             string[] v = ReturnFileContents(fileNameFullPath).Split(new string[] { "\r\n" }, StringSplitOptions.None);
-            dir = v[0];
-            string[] ls = v[1].Split(' ');
+            dir = v[1];
+            string[] ls = v[2].Split(' ');
             locationSizeOfControlls = new LocationSizeOfControlls();
             locationSizeOfControlls.mx = int.Parse(ls[0]);
             locationSizeOfControlls.my = int.Parse(ls[1]);
@@ -179,7 +204,7 @@ namespace ShowFiles
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.textBox1.Text = ReturnFileContents(_files[this.listBox1.SelectedIndex]);
+            this.textBox1.Text = ReturnFileContents((string)_listWithFiles[this.listBox1.SelectedIndex]);
         }
     }
 

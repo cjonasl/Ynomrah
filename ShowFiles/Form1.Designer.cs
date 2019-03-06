@@ -31,7 +31,7 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.buttonRefresh = new System.Windows.Forms.Button();
-            this.buttonRun = new System.Windows.Forms.Button();
+            this.textBoxError = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // listBox1
@@ -69,23 +69,23 @@
             this.buttonRefresh.UseVisualStyleBackColor = true;
             this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
-            // buttonRun
+            // textBoxError
             // 
-            this.buttonRun.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.buttonRun.Location = new System.Drawing.Point(13, 13);
-            this.buttonRun.Name = "buttonRun";
-            this.buttonRun.Size = new System.Drawing.Size(75, 23);
-            this.buttonRun.TabIndex = 3;
-            this.buttonRun.Text = "Run";
-            this.buttonRun.UseVisualStyleBackColor = true;
-            this.buttonRun.Click += new System.EventHandler(this.buttonRun_Click);
+            this.textBoxError.BackColor = System.Drawing.Color.Gainsboro;
+            this.textBoxError.Font = new System.Drawing.Font("Arial Rounded MT Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxError.ForeColor = System.Drawing.Color.Red;
+            this.textBoxError.Location = new System.Drawing.Point(160, 61);
+            this.textBoxError.Multiline = true;
+            this.textBoxError.Name = "textBoxError";
+            this.textBoxError.Size = new System.Drawing.Size(510, 328);
+            this.textBoxError.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 368);
-            this.Controls.Add(this.buttonRun);
+            this.ClientSize = new System.Drawing.Size(829, 495);
+            this.Controls.Add(this.textBoxError);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.listBox1);
@@ -103,7 +103,7 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button buttonRefresh;
-        private System.Windows.Forms.Button buttonRun;
+        private System.Windows.Forms.TextBox textBoxError;
     }
 }
 
